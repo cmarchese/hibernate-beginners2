@@ -47,10 +47,46 @@ public class HibernateAnnotationTest {
     @Test
     @DisplayName ("Create New Records")
     public void m1 () {
+        // Get a session.
+        Session session = null;
+        Transaction tx = null;
+        try {
 
-        Employee = new Employee();
-        e
+            logger.info("Getting a session...");
+            session = sessionFactory.openSession ();
+            tx = session.beginTransaction ();
 
+            // Set the data to save.
+            logger.info("Creating values to insert...");
+            Employee[] values = new Employee[]{
 
+                    new Employee("Homer Simpson", "Test", new Date()),
+                    new Employee("Marge Simpson", "Test", new Date()),
+                    new Employee("Bart Simpson", "Test", new Date()),
+                    new Employee("Lisa Simpson", "Test", new Date()),
+                    new Employee("Maggie Simpson", "Test", new Date())
+            };
+
+            // Save the data.
+            for (Employee e : values) {
+
+                logger.info (String.format ("Saving value %s", e.getName ()));
+                session.save(e);
+                logger.info (String.format ("Value %s saved!", e.getName ()));
+            }
+            tx.commit ();
+            Assertions.assertTrue (values[0].getId () > 0, String.format ("Problems creating teh new employee %s", values[0].getName ()));
+
+        } catch (Exception ex) {
+
+            logger.error (ex.getMessage ());
+            tx.rollback ();
+            Assertions.assertFalse (Boolean.TRUE, "Problems executing the test.");
+
+        } finally { session.close (); }
     }
+
+
+
+}
 }
