@@ -1,62 +1,61 @@
 package com.research24x7.hibernate.beginners.test;
+
+import com.research24x7.hibernate.beginners.entity.Employee;
 import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-    public class CSVReaderService {
+public class CSVReaderService {
 
 
-        private static final Logger logger = Logger.getLogger(CSVReaderService.class);
+    private static final Logger logger = Logger.getLogger(CSVReaderService.class);
 
 
-        public CSVReaderService () {
+    public CSVReaderService() {
 
-            super ();
-        }
+        super();
+    }
+    public List<Employee> load(String path) {
 
+        logger.debug(String.format("Reading file %s", path));
+        List<Employee> list = new ArrayList<>();
 
-        public List<CustomerDTO> load(String path) {
+        String line = "";
+        String cvsSplitBy = ",";
 
-            logger.debug (String.format ("Reading file %s", path));
-            List<CustomerDTO> list = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 
-            String line = "";
-            String cvsSplitBy = ",";
+            logger.debug(String.format("Loading values from file %s", path));
+            while ((line = br.readLine()) != null) {
 
-            try (BufferedReader br = new BufferedReader(new FileReader(path))){
+                logger.debug(String.format("Getting new line from file %s", path));
+                String[] val = line.split(cvsSplitBy);//  EL SEPARADOR
+                logger.debug(String.format("Line %s loaded from file %s", Arrays.toString(val), path));
 
-                logger.debug (String.format ("Loading values from file %s", path));
-                while ((line = br.readLine()) != null) {
+                Employee customer = new Employee();
+                customer.setDni(String.valueOf(val[2].trim()));
+                customer.setEmail(val[6].trim());
+                customer.setName(val[0].trim());
+                customer.setLast_name(val[1].trim());
+                customer.setMobile(val[3].trim());
+                customer.setRaw(line);
 
-                    logger.debug (String.format ("Getting new line from file %s", path));
-                   String[] val = line.split(cvsSplitBy);//  EL SEPARADOR
-                    logger.debug (String.format ("Line %s loaded from file %s", Arrays.toString(val), path));
-
-                    CustomerDTO customer = new CustomerDTO();
-                    customer.setAge(Integer.valueOf(val[4].trim()));
-                    customer.setCountry(val[5].trim());
-                    customer.setDni(Integer.valueOf(val[2].trim()));
-                    customer.setEmail(val[6].trim());
-                    customer.setName(val[0].trim());
-                    customer.setLastName(val[1].trim());
-                    customer.setMobile(val[3].trim());
-                    customer.setRaw (line);
-
-                    logger.debug (String.format ("Adding %s to list", customer));
-                    list.add(customer);
+                logger.debug(String.format("Adding %s to list", customer));
+                list.add(customer);
 
 
 //                    INSERTAR EN LA TABLA CODIGO ACA
-                }
-
-            } catch (Exception e) {
-
-                logger.error (String.format("Problems loading lines from %s", path), e);
             }
 
-            logger.debug (String.format("Return %d values", list.size()));
-            return list;
+        } catch (Exception e) {
+
+            logger.error(String.format("Problems loading lines from %s", path), e);
         }
+
+        logger.debug(String.format("Return %d values", list.size()));
+        return list;
     }
+}

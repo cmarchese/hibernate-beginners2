@@ -1,14 +1,6 @@
 
 package com.research24x7.hibernate.beginners.entity;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 
 @Entity (name =  "Employee")
 @Table (name = "employee")
@@ -45,9 +33,8 @@ public class Employee {
 
 	@Column(name="emp_mobile", length=28, nullable=false)
 	private String mobile;
-
+	private String raw;
     public Employee() {
-
 			super ();
 		}
 
@@ -59,7 +46,7 @@ public class Employee {
 			this.mobile = mobile;
 		}
 
-		public int getId() {
+	public int getId() {
 			return id;
 		}
 
@@ -106,4 +93,12 @@ public class Employee {
 		public void setMobile(String mobile) {
 			this.mobile = mobile;
 		}
+
+	public String getRaw() {
+		return raw;
+	}
+
+	public void setRaw(String raw) {
+		this.raw = raw;
+	}
 }
