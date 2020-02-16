@@ -16,16 +16,16 @@ OWNER TO postgres;
 
 CREATE TABLE public.employee
 (
-  emp_id integer NOT NULL DEFAULT nextval('employee_seq'::regclass),
-  emp_name character varying(28) COLLATE pg_catalog."default" NOT NULL,
-  emp_role character varying(28) COLLATE pg_catalog."default" NOT NULL,
-  sys_creation timestamp with time zone NOT NULL,
-  CONSTRAINT employee_pkey PRIMARY KEY (emp_id)
+    emp_id integer NOT NULL DEFAULT nextval('employee_seq'::regclass),
+    emp_name character varying(28) COLLATE pg_catalog."default" NOT NULL,
+    emp_last_name character varying(28) COLLATE pg_catalog."default" NOT NULL,
+    emp_email character varying(28) COLLATE pg_catalog."default" NOT NULL,
+    emp_mobile character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    emp_dni character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT employee_pkey PRIMARY KEY (emp_id)
 )
-WITH (
-OIDS = FALSE
-)
-TABLESPACE pg_default;
+
+    TABLESPACE pg_default;
 
 ALTER TABLE public.employee
-  OWNER to postgres;
+    OWNER to postgres;
