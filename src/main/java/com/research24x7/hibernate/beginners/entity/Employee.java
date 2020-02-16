@@ -1,12 +1,7 @@
 
 package com.research24x7.hibernate.beginners.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity (name =  "Employee")
@@ -25,20 +20,22 @@ public class Employee {
 	@Column(name="emp_last_name", length=28, nullable=false)
 	private String last_name;
 
-	@Column(name="emp_dni", length=28, nullable=false)
-	private String dni;
-
 	@Column(name="emp_email", length=28, nullable=false)
 	private String email;
 
 	@Column(name="emp_mobile", length=28, nullable=false)
 	private String mobile;
+
+	@Column(name="emp_dni", length=28, nullable=false)
+	private String dni;
+	@Transient
 	private String raw;
+
     public Employee() {
 			super ();
 		}
 
-		public Employee(String name, String last_name, String dni, String email, String mobile) {
+		public Employee(String name, String last_name, String email, String mobile, String dni) {
 			this.name = name;
 			this.last_name = last_name;
 			this.dni = dni;

@@ -58,11 +58,8 @@ public class HibernateAnnotationTest {
 
             // Set the data to save.
             logger.info("Creating values to insert...");
-            Employee[] values = new Employee[]{
-
-                    new Employee(),
-
-            };
+            CSVReaderService csvTest = new CSVReaderService();
+            Employee[] values = csvTest.load("C:\\Users\\crist\\IdeaProjects\\hibernate-beginners\\data.csv").toArray(new Employee[4]);
 
             // Save the data.
             for (Employee e : values) {
@@ -71,6 +68,7 @@ public class HibernateAnnotationTest {
                 session.save(e);
                 logger.info(String.format("Value %s saved!", e.getName()));
             }
+
             tx.commit();
             Assertions.assertTrue(values[0].getId() > 0, String.format("Problems creating teh new employee %s", values[0].getName()));
 

@@ -10,7 +10,6 @@ import java.util.List;
 
 public class CSVReaderService {
 
-
     private static final Logger logger = Logger.getLogger(CSVReaderService.class);
 
 
@@ -18,6 +17,7 @@ public class CSVReaderService {
 
         super();
     }
+
     public List<Employee> load(String path) {
 
         logger.debug(String.format("Reading file %s", path));
@@ -36,18 +36,22 @@ public class CSVReaderService {
                 logger.debug(String.format("Line %s loaded from file %s", Arrays.toString(val), path));
 
                 Employee customer = new Employee();
-                customer.setDni(String.valueOf(val[2].trim()));
-                customer.setEmail(val[6].trim());
+
                 customer.setName(val[0].trim());
+
                 customer.setLast_name(val[1].trim());
-                customer.setMobile(val[3].trim());
-                customer.setRaw(line);
+
+                customer.setEmail((val[2].trim()));
+
+                customer.setMobile(String.valueOf(val[3].trim()));
+
+                customer.setDni(String.valueOf(val[4].trim()));
+
+                customer.setRaw (line);
 
                 logger.debug(String.format("Adding %s to list", customer));
                 list.add(customer);
 
-
-//                    INSERTAR EN LA TABLA CODIGO ACA
             }
 
         } catch (Exception e) {
